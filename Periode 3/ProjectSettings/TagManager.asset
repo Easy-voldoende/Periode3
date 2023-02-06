@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Enemy
+  - Cube
+  - Main
+  - Bullet
+  - Fist
+  - LeftFist
+  - RightFist
+  - Ground
+  - LeftHand
+  - RightHand
+  - Head
+  - Body
+  - Shotgun
+  - ShotgunOrigin
+  - NPC
+  - InGameDisplay
+  - InGameLeft
+  - InGameRight
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Grab
+  - Water
+  - UI
+  - Player
+  - LeftFist
+  - Ground
+  - RightFist
+  - Physics Hand
+  - Ignore
+  - OtherPlayer
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0

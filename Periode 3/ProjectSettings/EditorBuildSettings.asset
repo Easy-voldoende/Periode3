@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Stefan/Main Menu.unity
+    guid: e84c4ce34cd967340b411866cb908671
+  - enabled: 1
+    path: Assets/Osama/osamascene.unity
+    guid: 8234bb15eeb66294eb683ac7d2275d81
+  - enabled: 1
+    path: Assets/Osama/dojoscenesama.unity
+    guid: bcde583496191784f9b19c7eec15cf49
+  - enabled: 1
+    path: Assets/Stefan/Endgame Scene.unity
+    guid: 0d161b343f6ba8640bc644fe0edc57f3
+  - enabled: 0
+    path: Assets/Dariel/Stadium Level.unity
+    guid: 906bef2d2b7dba549815241ae98db464
+  - enabled: 0
+    path: Assets/Boxing Scenes/TEST SCENE.unity
+    guid: bc34a8fa089335942a2651da11e291d0
+  - enabled: 0
+    path: Assets/Boxing Scenes/Trip Scene.unity
+    guid: 091bdfd633e5d1b45a565c0300391cf6
+  - enabled: 0
+    path: Assets/Boxing Scenes/Scene 2.unity
+    guid: d726024172c23f64483fbe4ace4140a0
+  - enabled: 0
+    path: Assets/Boxing Scenes/Scene 3.unity
+    guid: b9b73d588e83fe743904d173593a6010
+  - enabled: 0
+    path: Assets/Sem/Sem.unity
+    guid: e8fc172aa461c6a448ef5e599eea47fb
+  m_configObjects:
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: bfa1182bd221b4ca89619141f66f1260,
+      type: 2}
+    Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: dc5a169419fa04987b057f65238cf3ba,
+      type: 2}
+    UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 9bec1ce6a03ccba4b9a8215241b32e63,
+      type: 2}
+    UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: a49cadc1a815591479693b955ccf08c1,
+      type: 2}
+    com.unity.input.settings: {fileID: 11400000, guid: 25dd7cd3f5ca23548bde771214c92aa5,
+      type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 1a4c68ca72a83449f938d669337cb305,
+      type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: a9a6963505ddf7f4d886008c6dc86122,
+      type: 2}
