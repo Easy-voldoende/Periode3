@@ -1,3 +1,4 @@
+using OVR;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class ButtonScaling : MonoBehaviour
     private Vector3 otherTargetScale; 
     public GameObject[] otherButtons;
     public bool canChange;
+    private AudioManager audioManager;
     
     // Start is called before the first frame update
 
@@ -23,7 +25,7 @@ public class ButtonScaling : MonoBehaviour
         maxSize = baseScale * 1.5f;
         idleSize = baseScale;
         targetScale = idleSize;
-        
+        audioManager = FindObjectOfType<AudioManager>();
     }
     public void Update()
     {
@@ -37,6 +39,7 @@ public class ButtonScaling : MonoBehaviour
         canChange = true;
         targetScale = maxSize;
         otherTargetScale = minSize;
+        audioManager.PlayAudio(0, 1, 1);
     }
     public void ScaleIdle()
     {
