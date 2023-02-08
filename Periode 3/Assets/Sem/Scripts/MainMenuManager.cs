@@ -22,6 +22,7 @@ public class MainMenuManager : MonoBehaviour
     private AudioManager audioManager;
     public GameObject[] gears;
     private bool animDone;
+    public bool exitedOptions;
 
     public void Start()
     {
@@ -39,6 +40,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void Options()
     {
+        exitedOptions = false;
         menuState = 1;
         gearState = 1;
         animDone = false;
@@ -68,6 +70,7 @@ public class MainMenuManager : MonoBehaviour
     {
         
         yield return new WaitForSeconds(1);
+        mainCanvas.SetActive(true);
         optionsCanvas.SetActive(false);
         
 
@@ -76,7 +79,7 @@ public class MainMenuManager : MonoBehaviour
     public void OptionsBack()
     {
         menuState = 0;
-        mainCanvas.SetActive(true);
+        
         StartCoroutine(nameof(OptionsInactive));
         StartCoroutine(nameof(ResetGearSpeed));
     }

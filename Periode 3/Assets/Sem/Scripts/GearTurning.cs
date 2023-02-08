@@ -10,6 +10,7 @@ public class GearTurning : MonoBehaviour
     void Start()
     {
         turnSpeed = 100f;
+        
     }
 
     // Update is called once per frame
