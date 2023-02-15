@@ -113,7 +113,7 @@ Material:
     - _BaseStremght: 0
     - _Base_Scale: 0.1
     - _Base_Speed: 0.5
-    - _Base_Strenght: 14.97
+    - _Base_Strenght: 3.54
     - _Base_speed: 0.4
     - _Blend: 0
     - _BlendMode: 0
@@ -132,7 +132,7 @@ Material:
     - _DoubleSidedGIMode: 1
     - _DoubleSidedNormalMode: 2
     - _DstBlend: 0
-    - _Emission_Strenght: 0.4
+    - _Emission_Strenght: 0
     - _EnableBlendModePreserveSpecularLighting: 1
     - _EnableFogOnTransparent: 1
     - _EnvironmentReflections: 1
@@ -148,7 +148,7 @@ Material:
     - _Noise_Power: 0
     - _Noise_Size: 5.6
     - _Noise_Speed: 1
-    - _Normal_Size: 1.7
+    - _Normal_Size: 0.97
     - _OcclusionStrength: 1
     - _OpaqueCullMode: 2
     - _Parallax: 0.02
@@ -195,7 +195,7 @@ Material:
     - _ZTestGBuffer: 4
     - _ZTestTransparent: 4
     - _ZWrite: 1
-    - _transparent: 0.519
+    - _transparent: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
