@@ -23,7 +23,7 @@ public class ResetPaintBucket : MonoBehaviour
 
             objectToReset.GetComponent<SnapToHolder>().myHolder = null;
             tagName = objectToReset.tag;
-            objectToReset.GetComponent<SnapToHolder>().grabbed = true;
+            objectToReset.GetComponent<SnapToHolder>().inHand = true;
             objectToReset.GetComponent<Rigidbody>().isKinematic = false;
         }
     }
@@ -37,7 +37,7 @@ public class ResetPaintBucket : MonoBehaviour
                 objectToReset.GetComponent<SnapToHolder>().myHolder.GetComponent<PaintLevel>().refills = 0;
                 objectToReset.GetComponent<SnapToHolder>().myHolder.GetComponent<PaintLevel>().canisterOnHolder = null;
             }
-            objectToReset.GetComponent<SnapToHolder>().grabbed = false;
+            objectToReset.GetComponent<SnapToHolder>().inHand = false;
             objectToReset.GetComponent<Rigidbody>().isKinematic = false;
             objectToReset.GetComponent<SnapToHolder>().snapped = false;
             objectToReset = null;
