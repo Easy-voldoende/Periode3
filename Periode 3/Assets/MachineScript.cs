@@ -5,6 +5,7 @@ using UnityEngine;
 public class MachineScript : MonoBehaviour
 {
     public GameObject objectToPaint;
+    public GameObject[] paintCanisters;
     public int refills;
     bool refilled;
     
@@ -12,72 +13,92 @@ public class MachineScript : MonoBehaviour
     {
         
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.tag == "Refill")
-        {
-            Refill();
-        }
-    }
-    public void Refill()
-    {
-        if(refilled == false)
-        {
-            refills = 10;
-            refilled = true;
-        }
-    }
+ 
     public void ColorGreen()
     {
-        if (refills > 0)
+        if (paintCanisters[0].GetComponent<PaintLevel>().canisterOnHolder != null)
+        {
+            if (paintCanisters[0].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
+            {
+                Renderer rend = objectToPaint.GetComponent<Renderer>();
+                Color color = Color.green;
+                rend.material.color = color;
+                paintCanisters[0].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills -= 1;
+            }
+        }
+        else
         {
             Renderer rend = objectToPaint.GetComponent<Renderer>();
-            Color color = Color.green;
+            Color color = Color.white;
             rend.material.color = color;
-            refills -= 1;
         }
     }
 
     public void ColorRed()
     {
-        if(refills > 0)
+        if (paintCanisters[1].GetComponent<PaintLevel>().canisterOnHolder != null)
+        {
+            if (paintCanisters[1].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
+            {
+                Renderer rend = objectToPaint.GetComponent<Renderer>();
+                Color color = Color.red;
+                rend.material.color = color;
+                paintCanisters[1].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills -= 1;
+            }
+        }
+        else
         {
             Renderer rend = objectToPaint.GetComponent<Renderer>();
-            Color color = Color.red;
+            Color color = Color.white;
             rend.material.color = color;
-            refills -= 1;
         }
+
     }
 
     public void ColorBlue()
     {
-        if(refills > 0)
+        if (paintCanisters[2].GetComponent<PaintLevel>().canisterOnHolder != null)
+        {
+            if (paintCanisters[2].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
+            {
+                Renderer rend = objectToPaint.GetComponent<Renderer>();
+                Color color = Color.blue;
+                rend.material.color = color;
+                paintCanisters[2].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills -= 1;
+            }
+
+
+        }
+        else
         {
             Renderer rend = objectToPaint.GetComponent<Renderer>();
-            Color color = Color.blue;
+            Color color = Color.white;
             rend.material.color = color;
-            refills -= 1;
         }
     }
+
 
     public void ColorMagenta()
     {
-        if (refills > 0)
+        if (paintCanisters[3].GetComponent<PaintLevel>().canisterOnHolder != null)
+        {
+            if (paintCanisters[3].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
+            {
+                Renderer rend = objectToPaint.GetComponent<Renderer>();
+                Color color = Color.magenta;
+                rend.material.color = color;
+                paintCanisters[3].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills -= 1;
+            }
+
+
+        }
+        else
         {
             Renderer rend = objectToPaint.GetComponent<Renderer>();
-            Color color = Color.magenta;
+            Color color = Color.white;
             rend.material.color = color;
-            refills -= 1;
         }
     }
-
 
 
 }
