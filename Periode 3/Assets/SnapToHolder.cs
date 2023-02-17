@@ -6,12 +6,14 @@ using UnityEngine;
 public class SnapToHolder : MonoBehaviour
 {
     
-    public bool grabbed;
-    public string assignedRefillColor;
+    public bool inHand;
     public bool snapped;
-    public float refills;
     public bool canisterIsFull;
+    public string assignedRefillColor;
+    public float refills;
     public GameObject myHolder;
+    public Color newColor;
+
     private void Start()
     {
         canisterIsFull = true;
@@ -30,7 +32,7 @@ public class SnapToHolder : MonoBehaviour
     }
     public void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Holder" && grabbed == false && snapped == false)
+        if(collision.gameObject.tag == "Holder" && inHand == false && snapped == false)
         {
             if(collision.gameObject.GetComponent<PaintLevel>().assignedColor == assignedRefillColor)
             {

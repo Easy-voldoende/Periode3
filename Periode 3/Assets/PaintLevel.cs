@@ -11,12 +11,6 @@ public class PaintLevel : MonoBehaviour
     public bool occupied;
     public string assignedColor;
     
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         if(canisterOnHolder != null)
