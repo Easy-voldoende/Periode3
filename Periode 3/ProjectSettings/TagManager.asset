@@ -22,6 +22,8 @@ TagManager:
   - InGameDisplay
   - InGameLeft
   - InGameRight
+  - Holder
+  - Paint
   layers:
   - Default
   - TransparentFX
