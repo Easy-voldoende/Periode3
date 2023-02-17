@@ -27,6 +27,10 @@ public class VRMovement : MonoBehaviour
     public float healResetTime;
     public GameObject cameraOrigin;
     public GameObject cam;
+    public bool grabbedLeft;
+    public bool grabbedRight;
+    public GameObject rightObject;
+    public GameObject leftObject;
 
     void Start()
     {
@@ -58,7 +62,7 @@ public class VRMovement : MonoBehaviour
         
         UnityEngine.XR.InputDevice device = InputDevices.GetDeviceAtXRNode(inputSource);
         device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out inputAxis);
-        speed += 3 * Time.deltaTime;
+        speed += 5 * Time.deltaTime;
         if(speed > maxSpeed)
         {
             speed = maxSpeed;
@@ -68,6 +72,11 @@ public class VRMovement : MonoBehaviour
         {
             speed = 0;
         }
+    }
+
+    public void Update()
+    {
+        
     }
     private void FixedUpdate()
     {
@@ -91,10 +100,27 @@ public class VRMovement : MonoBehaviour
     void CapsuleFollowHeadset()
     {
         float offset = 0.2f;
+        GetComponent<CapsuleCollider>().height = rig.CameraInOriginSpaceHeight + offset;
         characterController.height = rig.CameraInOriginSpaceHeight+ offset;
         Vector3 capsuleCenter = transform.InverseTransformPoint(rig.Camera.transform.position);
         characterController.center = new Vector3(capsuleCenter.x, characterController.height / 1.5f + characterController.skinWidth, capsuleCenter.z);
+        GetComponent<CapsuleCollider>().center = new Vector3(capsuleCenter.x, characterController.height/1.5f+characterController.skinWidth, capsuleCenter.z);
     }
     
-    
+    public void GrabLeft(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            grabbedLeft = true;
+        }
+    }
+
+    public void GrabRight(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            grabbedRight = true;
+        }
+    }
+
 }

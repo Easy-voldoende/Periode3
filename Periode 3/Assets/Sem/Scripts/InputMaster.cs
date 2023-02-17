@@ -46,27 +46,36 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""ResetCam"",
+                    ""name"": ""GrabLeft"",
                     ""type"": ""Button"",
-                    ""id"": ""9a9ca80d-947f-40d7-b470-940d51dcbfa4"",
+                    ""id"": ""b7fcae74-ba6b-4f54-86c7-6d9fae9795e7"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""LeftHand"",
+                    ""name"": ""GrabRight"",
                     ""type"": ""Button"",
-                    ""id"": ""b4de132b-89bd-491e-9100-7f6e28431fa2"",
+                    ""id"": ""07f44bed-a539-407b-b231-d9abc72c03f0"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""RightHand"",
+                    ""name"": ""ReleaseLeft"",
                     ""type"": ""Button"",
-                    ""id"": ""19e64652-0d60-46e4-af98-fb87a4e4d2d5"",
+                    ""id"": ""78b28460-4f24-413e-85b8-8a57c9994f07"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ReleaseRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""eb7a4001-7beb-4d99-b1ed-4dd4c71e8a3c"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -98,34 +107,45 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""8905fa6e-0028-4bf1-9807-e82493f8ea66"",
-                    ""path"": ""<OculusTouchController>{LeftHand}/secondaryButton"",
-                    ""interactions"": ""Hold(duration=0.1,pressPoint=0.1)"",
+                    ""id"": ""31655e01-31d4-4557-9fe7-fc0abc3495fa"",
+                    ""path"": ""<OculusTouchController>{LeftHand}/gripPressed"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Oculus"",
-                    ""action"": ""ResetCam"",
+                    ""action"": ""GrabLeft"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""f6415814-2e63-4934-8ea6-570b0258be46"",
-                    ""path"": """",
+                    ""id"": ""817ec3b2-2e0f-4215-803c-dbdda1a5c327"",
+                    ""path"": ""<OculusTouchController>{RightHand}/gripPressed"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LeftHand"",
+                    ""groups"": ""Oculus"",
+                    ""action"": ""GrabRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""7afa7ca6-da2b-4f4e-b6ca-0e9c0189501e"",
-                    ""path"": """",
+                    ""id"": ""4533592a-6695-49e6-8b2f-73272175fe16"",
+                    ""path"": ""<OculusTouchController>{LeftHand}/gripPressed"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""RightHand"",
+                    ""groups"": ""Oculus"",
+                    ""action"": ""ReleaseLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4440e2c4-b2d3-47c7-8fd4-41d715453243"",
+                    ""path"": ""<OculusTouchController>{RightHand}/gripPressed"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Oculus"",
+                    ""action"": ""ReleaseRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -160,9 +180,10 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
-        m_Player_ResetCam = m_Player.FindAction("ResetCam", throwIfNotFound: true);
-        m_Player_LeftHand = m_Player.FindAction("LeftHand", throwIfNotFound: true);
-        m_Player_RightHand = m_Player.FindAction("RightHand", throwIfNotFound: true);
+        m_Player_GrabLeft = m_Player.FindAction("GrabLeft", throwIfNotFound: true);
+        m_Player_GrabRight = m_Player.FindAction("GrabRight", throwIfNotFound: true);
+        m_Player_ReleaseLeft = m_Player.FindAction("ReleaseLeft", throwIfNotFound: true);
+        m_Player_ReleaseRight = m_Player.FindAction("ReleaseRight", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -224,18 +245,20 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Look;
-    private readonly InputAction m_Player_ResetCam;
-    private readonly InputAction m_Player_LeftHand;
-    private readonly InputAction m_Player_RightHand;
+    private readonly InputAction m_Player_GrabLeft;
+    private readonly InputAction m_Player_GrabRight;
+    private readonly InputAction m_Player_ReleaseLeft;
+    private readonly InputAction m_Player_ReleaseRight;
     public struct PlayerActions
     {
         private @InputMaster m_Wrapper;
         public PlayerActions(@InputMaster wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Look => m_Wrapper.m_Player_Look;
-        public InputAction @ResetCam => m_Wrapper.m_Player_ResetCam;
-        public InputAction @LeftHand => m_Wrapper.m_Player_LeftHand;
-        public InputAction @RightHand => m_Wrapper.m_Player_RightHand;
+        public InputAction @GrabLeft => m_Wrapper.m_Player_GrabLeft;
+        public InputAction @GrabRight => m_Wrapper.m_Player_GrabRight;
+        public InputAction @ReleaseLeft => m_Wrapper.m_Player_ReleaseLeft;
+        public InputAction @ReleaseRight => m_Wrapper.m_Player_ReleaseRight;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -251,15 +274,18 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                 @Look.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
                 @Look.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
                 @Look.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
-                @ResetCam.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnResetCam;
-                @ResetCam.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnResetCam;
-                @ResetCam.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnResetCam;
-                @LeftHand.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftHand;
-                @LeftHand.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftHand;
-                @LeftHand.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftHand;
-                @RightHand.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightHand;
-                @RightHand.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightHand;
-                @RightHand.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightHand;
+                @GrabLeft.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrabLeft;
+                @GrabLeft.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrabLeft;
+                @GrabLeft.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrabLeft;
+                @GrabRight.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrabRight;
+                @GrabRight.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrabRight;
+                @GrabRight.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrabRight;
+                @ReleaseLeft.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReleaseLeft;
+                @ReleaseLeft.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReleaseLeft;
+                @ReleaseLeft.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReleaseLeft;
+                @ReleaseRight.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReleaseRight;
+                @ReleaseRight.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReleaseRight;
+                @ReleaseRight.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReleaseRight;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -270,15 +296,18 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                 @Look.started += instance.OnLook;
                 @Look.performed += instance.OnLook;
                 @Look.canceled += instance.OnLook;
-                @ResetCam.started += instance.OnResetCam;
-                @ResetCam.performed += instance.OnResetCam;
-                @ResetCam.canceled += instance.OnResetCam;
-                @LeftHand.started += instance.OnLeftHand;
-                @LeftHand.performed += instance.OnLeftHand;
-                @LeftHand.canceled += instance.OnLeftHand;
-                @RightHand.started += instance.OnRightHand;
-                @RightHand.performed += instance.OnRightHand;
-                @RightHand.canceled += instance.OnRightHand;
+                @GrabLeft.started += instance.OnGrabLeft;
+                @GrabLeft.performed += instance.OnGrabLeft;
+                @GrabLeft.canceled += instance.OnGrabLeft;
+                @GrabRight.started += instance.OnGrabRight;
+                @GrabRight.performed += instance.OnGrabRight;
+                @GrabRight.canceled += instance.OnGrabRight;
+                @ReleaseLeft.started += instance.OnReleaseLeft;
+                @ReleaseLeft.performed += instance.OnReleaseLeft;
+                @ReleaseLeft.canceled += instance.OnReleaseLeft;
+                @ReleaseRight.started += instance.OnReleaseRight;
+                @ReleaseRight.performed += instance.OnReleaseRight;
+                @ReleaseRight.canceled += instance.OnReleaseRight;
             }
         }
     }
@@ -296,8 +325,9 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
-        void OnResetCam(InputAction.CallbackContext context);
-        void OnLeftHand(InputAction.CallbackContext context);
-        void OnRightHand(InputAction.CallbackContext context);
+        void OnGrabLeft(InputAction.CallbackContext context);
+        void OnGrabRight(InputAction.CallbackContext context);
+        void OnReleaseLeft(InputAction.CallbackContext context);
+        void OnReleaseRight(InputAction.CallbackContext context);
     }
 }

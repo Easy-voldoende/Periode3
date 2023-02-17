@@ -100,10 +100,13 @@ public class MainMenuManager : MonoBehaviour
     {
         crossFade.SetTrigger("Crossfade");
         yield return new WaitForSeconds(1);
-        //SceneManager.LoadScene(null);
+        SceneManager.LoadScene(1);
 
     }
-
+    public void Quit()
+    {
+        Application.Quit();
+    }
     public void Update()
     {
         gearAnim.SetInteger("MenuState", menuState);
