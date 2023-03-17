@@ -1,11 +1,10 @@
-using Oculus.Interaction.GrabAPI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SnapToHolder : MonoBehaviour
+public class BeakerSnapping : MonoBehaviour
 {
-    
+    // Start is called before the first frame update
     public bool inHand;
     public bool snapped;
     public bool canisterIsFull;
@@ -14,28 +13,11 @@ public class SnapToHolder : MonoBehaviour
     public GameObject myHolder;
     public float yOffset;
     public Color newColor;
-
-    private void Start()
-    {
-        canisterIsFull = true;
-        refills = 10;
-    }
-    public void Update()
-    {
-        if(refills > 0)
-        {
-            canisterIsFull = true;
-        }
-        else
-        {
-            canisterIsFull=false;
-        }
-    }
     public void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Holder" && inHand == false && snapped == false)
+        if (collision.gameObject.tag == "BeakerPlacement" && inHand == false && snapped == false)
         {
-            if(collision.gameObject.GetComponent<PaintLevel>().assignedColor == assignedRefillColor)
+            if (collision.gameObject.GetComponent<PaintLevel>().assignedColor == assignedRefillColor)
             {
                 myHolder = collision.gameObject;
                 collision.gameObject.GetComponent<PaintLevel>().canisterOnHolder = gameObject;
@@ -48,11 +30,10 @@ public class SnapToHolder : MonoBehaviour
                 Vector3 offset = new Vector3(0, yOffset, 0);
                 gameObject.transform.position = snapPos + offset;
                 snapped = true;
-                
+
             }
-            
+
         }
-        
+
     }
-    
 }
