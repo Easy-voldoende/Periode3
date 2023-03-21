@@ -99,7 +99,7 @@ public class VRMovement : MonoBehaviour
     }
     void CapsuleFollowHeadset()
     {
-        float offset = 0.2f;
+        float offset = 0.4f;
         GetComponent<CapsuleCollider>().height = rig.CameraInOriginSpaceHeight + offset;
         characterController.height = rig.CameraInOriginSpaceHeight+ offset;
         Vector3 capsuleCenter = transform.InverseTransformPoint(rig.Camera.transform.position);

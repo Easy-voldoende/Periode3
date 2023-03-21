@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 
 public class MachineScript : MonoBehaviour
@@ -45,6 +46,10 @@ public class MachineScript : MonoBehaviour
 
     public void ColorRed()
     {
+        if (paintCanisters[1].GetComponent<PaintLevel>().refills! > 0)
+        {
+            return;
+        }
         if (paintCanisters[1].GetComponent<PaintLevel>().canisterOnHolder != null)
         {
             if (paintCanisters[1].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
@@ -63,6 +68,10 @@ public class MachineScript : MonoBehaviour
 
     public void ColorBlue()
     {
+        if(paintCanisters[2].GetComponent<PaintLevel>().refills !> 0)
+        {
+            return;
+        }
         if (paintCanisters[2].GetComponent<PaintLevel>().canisterOnHolder != null)
         {
             if (paintCanisters[2].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
@@ -86,6 +95,10 @@ public class MachineScript : MonoBehaviour
 
     public void ColorMagenta()
     {
+        if (paintCanisters[3].GetComponent<PaintLevel>().refills! > 0)
+        {
+            return;
+        }
         if (paintCanisters[3].GetComponent<PaintLevel>().canisterOnHolder != null)
         {
             if (paintCanisters[3].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)

@@ -18,7 +18,7 @@ public class SnapToHolder : MonoBehaviour
     private void Start()
     {
         canisterIsFull = true;
-        refills = 10;
+        refills = 5;
     }
     public void Update()
     {

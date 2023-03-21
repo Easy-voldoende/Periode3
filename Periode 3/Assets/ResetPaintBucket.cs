@@ -7,6 +7,7 @@ public class ResetPaintBucket : MonoBehaviour
 {
     public GameObject objectToReset;
     public LayerMask layerMask;
+    public GameObject lid, lid2;
     
     public string tagName;
     
@@ -33,6 +34,7 @@ public class ResetPaintBucket : MonoBehaviour
             objectToReset.GetComponent<Rigidbody>().isKinematic = false;
         }
     }
+    
     public void RigidReset()
     {
         
@@ -49,6 +51,7 @@ public class ResetPaintBucket : MonoBehaviour
             objectToReset = null;
         }
     }
+    
     public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Paint") 

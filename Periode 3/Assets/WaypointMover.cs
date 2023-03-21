@@ -10,10 +10,15 @@ public class WaypointMover : MonoBehaviour
     public float cooldown;
     public int checkPoints;
     public bool started, finished;
+    public bool grabbed;
 
     private float distanceThreshold = 0.01f;
-
-    
+    private enum ObjectState
+    {
+        GRABBED,
+        INMACHINE,
+    }
+    ObjectState state;
 
     public float distanceToNextWaypoint;
 
@@ -36,7 +41,7 @@ public class WaypointMover : MonoBehaviour
     void Update()
     {
         cooldown -= Time.deltaTime;
-        if(cooldown <= 0f)
+        if(cooldown <= 0f && grabbed == false)
         {
             transform.position = Vector3.MoveTowards(transform.position, currentWaypoint.position, moveSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, currentWaypoint.position) < distanceThreshold)
@@ -79,17 +84,19 @@ public class WaypointMover : MonoBehaviour
                 cooldown = 3f;
                 
             }
+
+            if (cooldown <= 0 && started == true)
+            {
+                moveSpeed = 0.5f;
+            }
+            else
+            {
+                moveSpeed = 0f;
+            }
+            distanceToNextWaypoint = Vector3.Distance(transform.position, currentWaypoint.position);
         }
         
 
-        if (cooldown <= 0 && started == true)
-        {
-            moveSpeed = 0.5f;
-        }
-        else
-        {
-            moveSpeed = 0f;
-        }
-        distanceToNextWaypoint = Vector3.Distance(transform.position, currentWaypoint.position);
+        
     }
 }
