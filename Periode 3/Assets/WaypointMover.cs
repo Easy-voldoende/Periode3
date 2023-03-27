@@ -11,6 +11,8 @@ public class WaypointMover : MonoBehaviour
     public int checkPoints;
     public bool started, finished;
     public bool grabbed;
+    public Color color;
+    
 
     private float distanceThreshold = 0.01f;
     private enum ObjectState
@@ -41,8 +43,9 @@ public class WaypointMover : MonoBehaviour
     void Update()
     {
         cooldown -= Time.deltaTime;
-        if(cooldown <= 0f && grabbed == false)
+        if(cooldown <= 0f && grabbed == false && started == true)
         {
+            gameObject.GetComponent<Rigidbody>().isKinematic = true;
             transform.position = Vector3.MoveTowards(transform.position, currentWaypoint.position, moveSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, currentWaypoint.position) < distanceThreshold)
             {
@@ -82,7 +85,8 @@ public class WaypointMover : MonoBehaviour
                 checkPoints = 0;
                 moveSpeed = 0f;
                 cooldown = 3f;
-                
+                gameObject.GetComponent<Rigidbody>().isKinematic = false;
+
             }
 
             if (cooldown <= 0 && started == true)
@@ -95,7 +99,12 @@ public class WaypointMover : MonoBehaviour
             }
             distanceToNextWaypoint = Vector3.Distance(transform.position, currentWaypoint.position);
         }
-        
+        if(cooldown > 0)
+        {
+            Renderer rend = GetComponent<Renderer>();
+            Color newColor = Color.Lerp(rend.material.color, color, Time.deltaTime*0.1f);
+            rend.material.color = newColor;
+        }
 
         
     }

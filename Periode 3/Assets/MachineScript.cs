@@ -6,11 +6,18 @@ using UnityEngine;
 public class MachineScript : MonoBehaviour
 {
     public GameObject objectToPaint;
+    public GameObject missionDropoff;
     public GameObject[] paintCanisters;
+    public GameObject missionSystem;
     public int refills;
     bool refilled;
     public Color finalColor;
     public bool painted;
+    public string missionColor;
+    
+    public int colorMatchup;
+    public bool isMatching, missionCompleted;
+    
     
     void Start()
     {
@@ -25,14 +32,23 @@ public class MachineScript : MonoBehaviour
             rend.material.color = color;
             painted = true;
         }
+
+        if(colorMatchup == missionSystem.GetComponent<MissionSystem>().missionIndex)
+        {
+            missionDropoff.GetComponent<CheckForMissionComplete>().canCheck = true;
+            isMatching = true;
+        }
     }
     public void ColorGreen()
     {
+        colorMatchup = 0;
+        
         if (paintCanisters[0].GetComponent<PaintLevel>().canisterOnHolder != null)
         {
             if (paintCanisters[0].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
             {
-                finalColor = Color.green;   
+                finalColor = Color.green;
+                objectToPaint.GetComponent<WaypointMover>().color =finalColor;
                 paintCanisters[0].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills -= 1;
             }
         }
@@ -46,6 +62,7 @@ public class MachineScript : MonoBehaviour
 
     public void ColorRed()
     {
+        colorMatchup = 1;
         if (paintCanisters[1].GetComponent<PaintLevel>().refills! > 0)
         {
             return;
@@ -54,7 +71,8 @@ public class MachineScript : MonoBehaviour
         {
             if (paintCanisters[1].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
             {
-                finalColor = Color.red;                
+                finalColor = Color.red;
+                objectToPaint.GetComponent<WaypointMover>().color = finalColor;
                 paintCanisters[1].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills -= 1;
             }
         }
@@ -68,7 +86,8 @@ public class MachineScript : MonoBehaviour
 
     public void ColorBlue()
     {
-        if(paintCanisters[2].GetComponent<PaintLevel>().refills !> 0)
+        colorMatchup = 2;
+        if (paintCanisters[2].GetComponent<PaintLevel>().refills !> 0)
         {
             return;
         }
@@ -78,7 +97,7 @@ public class MachineScript : MonoBehaviour
             {
                 
                 finalColor = Color.blue;
-                
+                objectToPaint.GetComponent<WaypointMover>().color = finalColor;
                 paintCanisters[2].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills -= 1;
             }
 
@@ -127,8 +146,6 @@ public class MachineScript : MonoBehaviour
     }
 
 
-    public void GoToOrders()
-    {
-
-    }
+    
+    
 }

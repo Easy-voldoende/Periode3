@@ -16,7 +16,10 @@ public class ResetPaintBucket : MonoBehaviour
         if(objectToReset == null)
         {
             Collider[] collider = Physics.OverlapSphere(transform.position, 0.2f,layerMask);
-            objectToReset = collider[0].gameObject;
+            if (collider[0] != null)
+            {
+                objectToReset = collider[0].gameObject;
+            }
             
         }
         if(objectToReset != null)
