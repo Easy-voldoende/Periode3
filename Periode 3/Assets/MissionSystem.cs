@@ -8,7 +8,7 @@ public class MissionSystem : MonoBehaviour
     public int missionIndex;
     public GameObject missionPaperSpawner;
     public GameObject prefab;
-    public GameObject prefabSpawned;
+    public GameObject prefabSpawned, spawnPos;
     public MachineScript machineScript;
     public bool ready;
     public string currentMissionColor;
@@ -40,7 +40,7 @@ public class MissionSystem : MonoBehaviour
     {
         missionIndex = Random.Range(0, 3);
         missionState = MissionState.PICKED;
-        prefabSpawned = Instantiate(prefab,transform.position,Quaternion.identity);
+        prefabSpawned = Instantiate(prefab,spawnPos.transform.position,Quaternion.identity);
         GetNextMission();
         
     }

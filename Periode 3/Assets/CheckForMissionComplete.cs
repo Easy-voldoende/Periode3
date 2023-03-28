@@ -28,6 +28,7 @@ public class CheckForMissionComplete : MonoBehaviour
                 {
                     Destroy(collision.transform.gameObject);
                     machine.missionCompleted = true;
+                    machine.colorMatchup = 10000;
                 }
             }
         }

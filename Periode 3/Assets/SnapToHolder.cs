@@ -19,6 +19,13 @@ public class SnapToHolder : MonoBehaviour
     {
         canisterIsFull = true;
         refills = 5;
+        gameObject.GetComponent<Rigidbody>().isKinematic = true;
+        StartCoroutine(nameof(DelayKinematic));
+    }
+    public IEnumerator DelayKinematic()
+    {
+        yield return new WaitForSeconds(0.1f);
+        gameObject.GetComponent<Rigidbody>().isKinematic = false;
     }
     public void Update()
     {

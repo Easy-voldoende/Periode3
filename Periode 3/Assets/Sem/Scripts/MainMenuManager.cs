@@ -97,7 +97,7 @@ public class MainMenuManager : MonoBehaviour
 
     public IEnumerator LoadNextScene()
     {
-        crossFade.SetTrigger("Crossfade");
+        //crossFade.SetTrigger("Crossfade");
         yield return new WaitForSeconds(1);
         SceneManager.LoadScene(1);
 

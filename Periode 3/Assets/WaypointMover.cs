@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WaypointMover : MonoBehaviour
 {
-    private Waypoint waypoints;
+    public Waypoint waypoints;
     public GameObject waypointObject;
     public float moveSpeed;
     public float cooldown;
@@ -12,6 +12,7 @@ public class WaypointMover : MonoBehaviour
     public bool started, finished;
     public bool grabbed;
     public Color color;
+    public bool isMixing;
     
 
     private float distanceThreshold = 0.01f;
@@ -24,14 +25,14 @@ public class WaypointMover : MonoBehaviour
 
     public float distanceToNextWaypoint;
 
-    private Transform currentWaypoint;
+    public Transform currentWaypoint;
     // Start is called before the first frame update
     void Start()
     {
         
         waypoints = GameObject.Find("Waypoints").GetComponent<Waypoint>();
         waypointObject = GameObject.Find("Waypoints").gameObject;
-
+        isMixing = false;
         currentWaypoint = waypoints.GetNextWayPoint(currentWaypoint);
         transform.position = currentWaypoint.position;
 
@@ -45,6 +46,8 @@ public class WaypointMover : MonoBehaviour
         cooldown -= Time.deltaTime;
         if(cooldown <= 0f && grabbed == false && started == true)
         {
+            Quaternion q = new Quaternion(0, 0, 0, 0);
+            gameObject.transform.rotation = q;
             gameObject.GetComponent<Rigidbody>().isKinematic = true;
             transform.position = Vector3.MoveTowards(transform.position, currentWaypoint.position, moveSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, currentWaypoint.position) < distanceThreshold)
@@ -86,9 +89,10 @@ public class WaypointMover : MonoBehaviour
                 moveSpeed = 0f;
                 cooldown = 3f;
                 gameObject.GetComponent<Rigidbody>().isKinematic = false;
+                isMixing = false;
 
             }
-
+            
             if (cooldown <= 0 && started == true)
             {
                 moveSpeed = 0.5f;
@@ -102,10 +106,15 @@ public class WaypointMover : MonoBehaviour
         if(cooldown > 0)
         {
             Renderer rend = GetComponent<Renderer>();
-            Color newColor = Color.Lerp(rend.material.color, color, Time.deltaTime*0.1f);
+            Color newColor = Color.Lerp(rend.material.color, color, Time.deltaTime*0.15f);
             rend.material.color = newColor;
         }
+        if (grabbed == true)
+        {
+            checkPoints = 0;
+            isMixing = false;
+            started = false;
+        }
 
-        
     }
 }
