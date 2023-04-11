@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
+using TMPro;
 using UnityEngine;
 
 public class MachineScript : MonoBehaviour
@@ -16,9 +17,13 @@ public class MachineScript : MonoBehaviour
     public bool painted;
     public string missionColor;
     public bool canMix;
-    
+    public TextMeshProUGUI tmPro;
+    public GameObject error;
+    public GameObject buttons;
     public int colorMatchup;
+    public int finalColorMatchup;
     public bool isMatching, missionCompleted;
+    public string paintSelected;
     public int i;
     
     
@@ -26,13 +31,14 @@ public class MachineScript : MonoBehaviour
     void Start()
     {
         painted = false;
-        objectToPaint = Instantiate(objectToPaintPrefab, spawnPos.position, Quaternion.identity);
+        
         
     }
     public void Update()
     {
         if(objectToPaint != null)
         {
+            WaypointMover wp = objectToPaint.GetComponent<WaypointMover>();
             if (painted == false && objectToPaint.GetComponent<WaypointMover>().finished == true)
             {
                 Renderer rend = objectToPaint.GetComponent<Renderer>();
@@ -41,7 +47,7 @@ public class MachineScript : MonoBehaviour
                 painted = true;
             }
 
-            if (colorMatchup == missionSystem.GetComponent<MissionSystem>().missionIndex)
+            if (colorMatchup == missionSystem.GetComponent<MissionSystem>().missionIndex && wp.finished == true)
             {
                 missionDropoff.GetComponent<CheckForMissionComplete>().canCheck = true;
                 isMatching = true;
@@ -57,54 +63,67 @@ public class MachineScript : MonoBehaviour
     {
         Destroy(objectToPaint);
         objectToPaint = Instantiate(objectToPaintPrefab, spawnPos.position, Quaternion.identity);
+        objectToPaint.GetComponent<WaypointMover>().missionSystem = missionSystem.GetComponent<MissionSystem>();
     }
     public void ColorGreen()
     {
-        if(objectToPaint.GetComponent<WaypointMover>().isMixing == false)
-        {
-            colorMatchup = 0;
-            i = 0;
-            if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder != null)
-            {
-                if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
-                {
-                    finalColor = Color.green;
-                    objectToPaint.GetComponent<WaypointMover>().color = finalColor;
-                    paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills -= 1;
-                    canMix = true;
-                    
-                }
-            }
-            else
-            {
+        i = 0;
+        paintSelected = "Green";
 
-                finalColor = Color.white;
-                canMix = false;
+        CheckForPaintLevel(i);
+        if (objectToPaint != null)
+        {
+            if (objectToPaint.GetComponent<WaypointMover>().isMixing == false)
+            {
+                colorMatchup = 0;
+
+                if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder != null)
+                {
+                    if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
+                    {
+                        finalColor = Color.green;
+                        objectToPaint.GetComponent<WaypointMover>().color = finalColor;
+                        canMix = true;
+
+                    }
+                }
+                else
+                {
+
+                    finalColor = Color.white;
+                    canMix = false;
+                }
             }
         }
     }
 
     public void ColorRed()
     {
-        if(objectToPaint.GetComponent<WaypointMover>().isMixing == false)
-        {
-            colorMatchup = 1;
-            i = 1;
-            if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder != null)
-            {
-                if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
-                {
-                    finalColor = Color.red;
-                    objectToPaint.GetComponent<WaypointMover>().color = finalColor;
-                    paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills -= 1;
-                    canMix = true;
-                }
-            }
-            else
-            {
-                finalColor = Color.white;
-                canMix = false;
+        i = 1;
+        paintSelected = "Red";
 
+        CheckForPaintLevel(i);
+        if (objectToPaint != null)
+        {
+            if (objectToPaint.GetComponent<WaypointMover>().isMixing == false)
+            {
+                colorMatchup = i;
+
+                if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder != null)
+                {
+                    if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
+                    {
+                        finalColor = Color.red;
+                        objectToPaint.GetComponent<WaypointMover>().color = finalColor;
+                        canMix = true;
+                    }
+                }
+                else
+                {
+                    finalColor = Color.white;
+                    canMix = false;
+
+                }
             }
         }
         
@@ -115,29 +134,34 @@ public class MachineScript : MonoBehaviour
 
     public void ColorBlue()
     {
+        i = 2;
+        paintSelected = "Blue";
 
-        if (objectToPaint.GetComponent<WaypointMover>().isMixing == false)
+        CheckForPaintLevel(i);
+        if (objectToPaint != null)
         {
-            colorMatchup = 2;
-            i = 2;
-            if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder != null)
+            if (objectToPaint.GetComponent<WaypointMover>().isMixing == false)
             {
-                if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
+                colorMatchup = i;
+
+                if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder != null)
+                {
+                    if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
+                    {
+
+                        finalColor = Color.blue;
+                        objectToPaint.GetComponent<WaypointMover>().color = finalColor;
+                        canMix = true;
+                    }
+
+
+                }
+                else
                 {
 
-                    finalColor = Color.blue;
-                    objectToPaint.GetComponent<WaypointMover>().color = finalColor;
-                    paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills -= 1;
-                    canMix = true;
+                    finalColor = Color.white;
+                    canMix = false;
                 }
-
-
-            }
-            else
-            {
-
-                finalColor = Color.white;
-                canMix = false;
             }
         }
 
@@ -149,29 +173,34 @@ public class MachineScript : MonoBehaviour
 
     public void ColorMagenta()
     {
+        i = 3;
+        paintSelected = "Magenta";
 
-        if (objectToPaint.GetComponent<WaypointMover>().isMixing == false)
+        CheckForPaintLevel(i);
+        if (objectToPaint != null)
         {
-            colorMatchup = 3;
-            i = 3;
-            if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder != null)
+            if (objectToPaint.GetComponent<WaypointMover>().isMixing == false)
             {
-                if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
+                colorMatchup = i;
+
+                if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder != null)
                 {
+                    if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
+                    {
 
-                    finalColor = Color.magenta;
-                    objectToPaint.GetComponent<WaypointMover>().color = finalColor;
-                    paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills -= 1;
-                    canMix = true;
+                        finalColor = Color.magenta;
+                        objectToPaint.GetComponent<WaypointMover>().color = finalColor;
+                        canMix = true;
+                    }
+
+
                 }
+                else
+                {
+                    finalColor = Color.white;
+                    canMix = false;
 
-
-            }
-            else
-            {
-                finalColor = Color.white;
-                canMix = false;
-
+                }
             }
         }
         
@@ -181,58 +210,68 @@ public class MachineScript : MonoBehaviour
 
     public void ColorBlack()
     {
-        
 
-        if (objectToPaint.GetComponent<WaypointMover>().isMixing == false)
+        i = 4;
+        paintSelected = "Black";
+
+        CheckForPaintLevel(i);
+        if (objectToPaint != null)
         {
-            colorMatchup = 4;
-            i = 4;
-            if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder != null)
+            if (objectToPaint.GetComponent<WaypointMover>().isMixing == false)
             {
-                if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
+                colorMatchup = i;
+
+                if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder != null)
                 {
+                    if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
+                    {
 
-                    finalColor = Color.black;
-                    objectToPaint.GetComponent<WaypointMover>().color = finalColor;
-                    paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills -= 1;
-                    canMix = true;
+                        finalColor = Color.black;
+                        objectToPaint.GetComponent<WaypointMover>().color = finalColor;
+                        canMix = true;
+                    }
+
+
                 }
-
-
-            }
-            else
-            {
-                finalColor = Color.white;
-                canMix = false;
+                else
+                {
+                    finalColor = Color.white;
+                    canMix = false;
+                }
             }
         }
         
     }
     public void ColorYellow()
     {
-        
-        if (objectToPaint.GetComponent<WaypointMover>().isMixing == false)
+        i = 5;
+        paintSelected = "Yellow";
+
+        CheckForPaintLevel(i);
+        if (objectToPaint != null)
         {
-            colorMatchup = 5;
-            i = 5;
-            if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder != null)
+            if (objectToPaint.GetComponent<WaypointMover>().isMixing == false)
             {
-                if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
+                colorMatchup = i;
+
+                if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder != null)
                 {
+                    if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
+                    {
 
-                    finalColor = Color.yellow;
-                    objectToPaint.GetComponent<WaypointMover>().color = finalColor;
-                    paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills -= 1;
-                    canMix = true;
+                        finalColor = Color.yellow;
+                        objectToPaint.GetComponent<WaypointMover>().color = finalColor;
+                        canMix = true;
+                    }
+
+
                 }
+                else
+                {
+                    finalColor = Color.white;
+                    canMix = false;
 
-
-            }
-            else
-            {
-                finalColor = Color.white;
-                canMix = false;
-
+                }
             }
         }
         
@@ -240,81 +279,372 @@ public class MachineScript : MonoBehaviour
 
     public void ColorCyan()
     {
-        
 
-        if (objectToPaint.GetComponent<WaypointMover>().isMixing == false)
+        i = 6;
+        paintSelected = "Cyan";
+        CheckForPaintLevel(i);
+
+        if (objectToPaint != null)
         {
-            colorMatchup = 6;
-            i = 6;
-            if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder != null)
+            if (objectToPaint.GetComponent<WaypointMover>().isMixing == false)
             {
-                if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
+                colorMatchup = i;
+
+                if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder != null)
                 {
+                    if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
+                    {
 
-                    finalColor = Color.cyan;
-                    objectToPaint.GetComponent<WaypointMover>().color = finalColor;
-                    paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills -= 1;
-                    canMix = true;
+                        finalColor = Color.cyan;
+                        objectToPaint.GetComponent<WaypointMover>().color = finalColor;
+
+                        canMix = true;
+                    }
+
+
                 }
+                else
+                {
+                    finalColor = Color.white;
+                    canMix = false;
 
-
-            }
-            else
-            {
-                finalColor = Color.white;
-                canMix = false;
-
+                }
             }
         }
         
     }
     public void ColorGray()
     {
+        i = 7;
+        paintSelected = "Gray";
+        CheckForPaintLevel(i);
         
-        if (objectToPaint.GetComponent<WaypointMover>().isMixing == false)
+        if(objectToPaint != null)
         {
-            colorMatchup = 7;
-            i = 7;
-            if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder != null)
+            if (objectToPaint.GetComponent<WaypointMover>().isMixing == false)
             {
-                if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
+                colorMatchup = i;
+
+                if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder != null)
                 {
+                    if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
+                    {
 
-                    finalColor = Color.gray;
-                    objectToPaint.GetComponent<WaypointMover>().color = finalColor;
-                    paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills -= 1;
-                    canMix = true;
+                        finalColor = Color.gray;
+                        objectToPaint.GetComponent<WaypointMover>().color = finalColor;
+                        canMix = true;
+                    }
+
+
                 }
+                else
+                {
+                    finalColor = Color.white;
+                    canMix = false;
 
-
-            }
-            else
-            {
-                finalColor = Color.white;
-                canMix = false;
-
+                }
             }
         }
         
     }
+    public void ColorOrange()
+    {
+        i = 8;
+        paintSelected = "Orange";
+
+        CheckForPaintLevel(i);
+        if (objectToPaint != null)
+        {
+            if (objectToPaint.GetComponent<WaypointMover>().isMixing == false)
+            {
+                colorMatchup = i;
+
+                if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder != null)
+                {
+                    if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
+                    {
+                        finalColor = new Color(1, 0.482f, 0,1);
+                        objectToPaint.GetComponent<WaypointMover>().color = finalColor;
+                        canMix = true;
+
+                    }
+                }
+                else
+                {
+
+                    finalColor = Color.white;
+                    canMix = false;
+                }
+            }
+        }
+    }
+    public void ColorBrown()
+    {
+        i = 9;
+        paintSelected = "Brown";
+
+        CheckForPaintLevel(i);
+        if (objectToPaint != null)
+        {
+            if (objectToPaint.GetComponent<WaypointMover>().isMixing == false)
+            {
+                colorMatchup = i;
+
+                if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder != null)
+                {
+                    if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
+                    {
+                        finalColor = new Color(0.588f, 0.294f,0,1);
+                        objectToPaint.GetComponent<WaypointMover>().color = finalColor;
+                        canMix = true;
+
+                    }
+                }
+                else
+                {
+
+                    finalColor = Color.white;
+                    canMix = false;
+                }
+            }
+        }
+    }
+    public void ColorWhite()
+    {
+        i = 10;
+        paintSelected = "White";
+
+        CheckForPaintLevel(i);
+        if (objectToPaint != null)
+        {
+            if (objectToPaint.GetComponent<WaypointMover>().isMixing == false)
+            {
+                colorMatchup = i;
+
+                if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder != null)
+                {
+                    if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
+                    {
+                        finalColor = Color.white;
+                        objectToPaint.GetComponent<WaypointMover>().color = finalColor;
+                        canMix = true;
+
+                    }
+                }
+                else
+                {
+
+                    finalColor = Color.white;
+                    canMix = false;
+                }
+            }
+        }
+    }
+    public void ColorPurple()
+    {
+        i = 11;
+        paintSelected = "Purple";
+
+        CheckForPaintLevel(i);
+        if (objectToPaint != null)
+        {
+            if (objectToPaint.GetComponent<WaypointMover>().isMixing == false)
+            {
+                colorMatchup = i;
+
+                if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder != null)
+                {
+                    if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
+                    {
+                        finalColor = new Color(0.627f, 0.125f, 0.941f, 1);
+                        objectToPaint.GetComponent<WaypointMover>().color = finalColor;
+                        canMix = true;
+                        
+
+                    }
+                }
+                else
+                {
+
+                    finalColor = Color.white;
+                    canMix = false;
+                }
+            }
+        }
+    }
+
+    public void ColorOlive()
+    {
+        i = 12;
+        paintSelected = "Olive";
+
+        CheckForPaintLevel(i);
+        if (objectToPaint != null)
+        {
+            if (objectToPaint.GetComponent<WaypointMover>().isMixing == false)
+            {
+                colorMatchup = i;
+
+                if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder != null)
+                {
+                    if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
+                    {
+                        finalColor = new Color(0.501f, 0.501f,0,1);
+                        objectToPaint.GetComponent<WaypointMover>().color = finalColor;
+                        canMix = true;
+
+                    }
+                }
+                else
+                {
+
+                    finalColor = Color.white;
+                    canMix = false;
+                }
+            }
+        }
+    }
+    public void ColorIndigo()
+    {
+        i = 13;
+        paintSelected = "Indigo";
+
+        CheckForPaintLevel(i);
+        if (objectToPaint != null)
+        {
+            if (objectToPaint.GetComponent<WaypointMover>().isMixing == false)
+            {
+                colorMatchup = i;
+
+                if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder != null)
+                {
+                    if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
+                    {
+                        finalColor = new Color(0.509f,0.309f,1f,0.717f);
+                        objectToPaint.GetComponent<WaypointMover>().color = finalColor;
+                        canMix = true;
+
+                    }
+                }
+                else
+                {
+
+                    finalColor = Color.white;
+                    canMix = false;
+                }
+            }
+        }
+    }
+
+    public void ColorGold()
+    {
+        i = 14;
+        paintSelected = "Gold";
+
+        CheckForPaintLevel(i);
+        if (objectToPaint != null)
+        {
+            if (objectToPaint.GetComponent<WaypointMover>().isMixing == false)
+            {
+                colorMatchup = i;
+
+                if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder != null)
+                {
+                    if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
+                    {
+                        finalColor = new Color(1, 0.843f, 0f, 1f);
+                        objectToPaint.GetComponent<WaypointMover>().color = finalColor;
+                        canMix = true;
+
+                    }
+                }
+                else
+                {
+
+                    finalColor = Color.white;
+                    canMix = false;
+                }
+            }
+        }
+    }
+
+    public void ColorSilver()
+    {
+        i = 15;
+        paintSelected = "Silver";
+
+        CheckForPaintLevel(i);
+        if (objectToPaint != null)
+        {
+            if (objectToPaint.GetComponent<WaypointMover>().isMixing == false)
+            {
+                colorMatchup = i;
+
+                if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder != null)
+                {
+                    if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills > 0)
+                    {
+                        finalColor = new Color(0.752f, 0.752f, 0.752f,1);
+                        objectToPaint.GetComponent<WaypointMover>().color = finalColor;
+                        canMix = true;
+
+                    }
+                }
+                else
+                {
+
+                    finalColor = Color.white;
+                    canMix = false;
+                }
+            }
+        }
+    }
 
 
+
+    public void CheckForPaintLevel(int i)
+    {
+        if(paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder !=null)
+        {
+            if (paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills <= 0)
+            {
+                error.SetActive(true);
+                error.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "There is not enough " + paintSelected + " paint!";
+                buttons.SetActive(false);
+            }
+        }
+        else if(paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder == null)
+        {
+            error.SetActive(true);
+            error.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "There is not enough " + paintSelected + " paint!";
+            buttons.SetActive(false);
+        }
+    }
     public void ActivateMachine()
     {
         
         if(canMix == true && Vector3.Distance(objectToPaint.transform.position, startingPoint.transform.position)<0.25f)
         {
-            objectToPaint.GetComponent<WaypointMover>().started = true;
-            objectToPaint.GetComponent<WaypointMover>().finished = false;
+
+            WaypointMover move = objectToPaint.GetComponent<WaypointMover>();
+            move.started = true;
+            move.finished = false;
             painted = false;
-            objectToPaint.GetComponent<WaypointMover>().isMixing = true;
-            objectToPaint.GetComponent<WaypointMover>().checkPoints = 0;
-            objectToPaint.GetComponent<WaypointMover>().currentWaypoint = startingPoint.transform;
+            move.isMixing = true;
+            move.checkPoints = 0;
+            move.currentWaypoint = startingPoint.transform;
+            paintCanisters[i].GetComponent<PaintLevel>().canisterOnHolder.GetComponent<SnapToHolder>().refills -= 1;
+
         }
 
     }
 
+    public void ErrorDismiss()
+    {
+        error.SetActive(false);
+        buttons.SetActive(true);
 
+    }
     
     
 }

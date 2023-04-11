@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SnapToHolder : MonoBehaviour
 {
-    
+    public Transform startPos;
     public bool inHand;
     public bool snapped;
     public bool canisterIsFull;
@@ -17,6 +17,7 @@ public class SnapToHolder : MonoBehaviour
 
     private void Start()
     {
+        startPos = transform;
         canisterIsFull = true;
         refills = 5;
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
@@ -53,7 +54,7 @@ public class SnapToHolder : MonoBehaviour
                 gameObject.transform.rotation = desiredRot;
                 Vector3 snapPos = new Vector3(collision.gameObject.transform.position.x, collision.gameObject.transform.position.y, collision.gameObject.transform.position.z);
                 Vector3 offset = new Vector3(0, yOffset, 0);
-                gameObject.transform.position = snapPos + offset;
+                gameObject.transform.position = startPos.position;
                 snapped = true;
                 
             }

@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 16d759f6191d083478998f05dddf0f53, type: 2}
+  - {fileID: 2100000, guid: 2c3301e27b97924479086b2137decc0f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -265,6 +265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waypoints: {fileID: 0}
+  missionSystem: {fileID: 0}
   waypointObject: {fileID: 0}
   moveSpeed: 0
   cooldown: 0

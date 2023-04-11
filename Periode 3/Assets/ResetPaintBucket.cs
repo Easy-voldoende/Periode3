@@ -16,19 +16,26 @@ public class ResetPaintBucket : MonoBehaviour
         if(objectToReset == null)
         {
             Collider[] collider = Physics.OverlapSphere(transform.position, 0.06f,layerMask);
-            objectToReset = collider[0].transform.gameObject;
+            if (collider.Length >= 1)
+            {
+                objectToReset = collider[0].transform.gameObject;
+            }
             
         }
         
         if (objectToReset != null)
         {
-            if (objectToReset.GetComponent<SnapToHolder>() != null)
+            SnapToHolder snap = objectToReset.GetComponent<SnapToHolder>();
+            if (snap != null)
             {
-                objectToReset.GetComponent<SnapToHolder>().myHolder.GetComponent<PaintLevel>().refills = 0;
-                objectToReset.GetComponent<SnapToHolder>().myHolder.GetComponent<PaintLevel>().canisterOnHolder = null;
-                objectToReset.GetComponent<SnapToHolder>().myHolder = null;
-                objectToReset.GetComponent<SnapToHolder>().inHand = true;
-                objectToReset.GetComponent<SnapToHolder>().snapped = false;
+                if(snap.myHolder != null)
+                {
+                    snap.myHolder.GetComponent<PaintLevel>().refills = 0;
+                    snap.myHolder.GetComponent<PaintLevel>().canisterOnHolder = null;
+                    snap.myHolder = null;
+                }
+                snap.inHand = true;
+                snap.snapped = false;
             }
                                              
             objectToReset.GetComponent<Rigidbody>().isKinematic = false;
@@ -45,19 +52,24 @@ public class ResetPaintBucket : MonoBehaviour
         
         if (objectToReset != null)
         {
-            if (objectToReset.GetComponent<SnapToHolder>().myHolder != null)
+            SnapToHolder snap = objectToReset.GetComponent<SnapToHolder>();
+            if (snap != null)
             {
-                objectToReset.GetComponent<SnapToHolder>().myHolder.GetComponent<PaintLevel>().refills = 0;
-                objectToReset.GetComponent<SnapToHolder>().myHolder.GetComponent<PaintLevel>().canisterOnHolder = null;
-                objectToReset.GetComponent<SnapToHolder>().inHand = false;
-                objectToReset.GetComponent<SnapToHolder>().snapped = false;
+                if(snap.myHolder != null)
+                {
+                    snap.myHolder.GetComponent<PaintLevel>().refills = 0;
+                    snap.myHolder.GetComponent<PaintLevel>().canisterOnHolder = null;
+                }
+                snap.inHand = false;
+                snap.snapped = false;
             }
             
             objectToReset.GetComponent<Rigidbody>().isKinematic = false;
-            
-            if (objectToReset.GetComponent<WaypointMover>() != null)
+
+            WaypointMover mover = objectToReset.GetComponent<WaypointMover>();
+            if (mover != null)
             {
-                objectToReset.GetComponent<WaypointMover>().grabbed = false;
+                mover.grabbed = false;
             }
             objectToReset = null;
         }
@@ -65,7 +77,7 @@ public class ResetPaintBucket : MonoBehaviour
     
     public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Paint" && other.gameObject.tag =="Body") 
+        if (other.gameObject.tag == "Paint" || other.gameObject.tag == "Body") 
         {
             objectToReset = other.gameObject;
         }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class WaypointMover : MonoBehaviour
 {
     public Waypoint waypoints;
+    public MissionSystem missionSystem;
     public GameObject waypointObject;
     public float moveSpeed;
     public float cooldown;
@@ -13,15 +14,9 @@ public class WaypointMover : MonoBehaviour
     public bool grabbed;
     public Color color;
     public bool isMixing;
-    
+    public int i;
 
-    private float distanceThreshold = 0.01f;
-    private enum ObjectState
-    {
-        GRABBED,
-        INMACHINE,
-    }
-    ObjectState state;
+    private float distanceThreshold = 0.01f;    
 
     public float distanceToNextWaypoint;
 
@@ -57,7 +52,7 @@ public class WaypointMover : MonoBehaviour
             }
             if(Vector3.Distance(transform.position, waypointObject.transform.GetChild(1).transform.position) < distanceThreshold && checkPoints ==0)
             {
-                checkPoints++;
+                checkPoints++;  
                 moveSpeed = 0f;
                 cooldown = 3f;
             }
@@ -90,6 +85,7 @@ public class WaypointMover : MonoBehaviour
                 cooldown = 3f;
                 gameObject.GetComponent<Rigidbody>().isKinematic = false;
                 isMixing = false;
+                
 
             }
             
@@ -109,10 +105,12 @@ public class WaypointMover : MonoBehaviour
             Color newColor = Color.Lerp(rend.material.color, color, Time.deltaTime*0.15f);
             rend.material.color = newColor;
         }
-        if (grabbed == true)
+        if (grabbed == true && isMixing == true)
         {
             checkPoints = 0;
+            
             isMixing = false;
+            finished = false;
             started = false;
         }
 
