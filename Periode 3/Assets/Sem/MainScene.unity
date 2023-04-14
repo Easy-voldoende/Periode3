@@ -499,7 +499,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 86dcd60ae505d4146a153ea47ef874c2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.36267263
+      value: 0.607
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 86dcd60ae505d4146a153ea47ef874c2,
         type: 3}
@@ -55978,8 +55978,8 @@ GameObject:
   - component: {fileID: 7720483781006544289}
   - component: {fileID: 6668547425403159044}
   - component: {fileID: 8894477067665585870}
-  - component: {fileID: 8894477067665585872}
   - component: {fileID: 8894477067665585871}
+  - component: {fileID: 8894477067665585872}
   m_Layer: 0
   m_Name: Wall (1)
   m_TagString: Untagged
