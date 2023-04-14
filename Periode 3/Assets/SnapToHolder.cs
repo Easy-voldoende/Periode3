@@ -18,9 +18,12 @@ public class SnapToHolder : MonoBehaviour
     public Color newColor;
     public int i;
     public float deathCooldown;
+    public AudioManager aud;
 
     private void Start()
     {
+
+        aud = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         deathCooldown = 3f;
         machine = GameObject.Find("MachineScreen").GetComponent<MachineScript>();
         canisterIsFull = true;
@@ -147,8 +150,16 @@ public class SnapToHolder : MonoBehaviour
             Quaternion desiredRot = new Quaternion(0, 90, 90, 0);
             gameObject.transform.rotation = desiredRot;
             gameObject.GetComponent<Rigidbody>().isKinematic = true;
+            
             gameObject.transform.position = shelf.snapPositions[shelf.i].transform.position;
             machine.objectToMove = null;
+            GameObject child = gameObject.transform.GetChild(0).gameObject;
+            Vector3 newPos = new Vector3(gameObject.transform.GetChild(0).transform.position.x, 5.5005f, gameObject.transform.GetChild(0).transform.position.z);
+            
+            gameObject.transform.GetChild(0).transform.parent = null;
+            child.transform.position = newPos;
+            Destroy(gameObject);
+            
             shelf.i++;
             
 

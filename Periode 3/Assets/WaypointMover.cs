@@ -117,12 +117,10 @@ public class WaypointMover : MonoBehaviour
                 cooldown = 3f;
                 gameObject.GetComponent<Rigidbody>().isKinematic = false;
                 isMixing = false;
-                gameObject.GetComponent<BoxCollider>().enabled = false;
-                gameObject.GetComponent<Rigidbody>().isKinematic = true;
-                gameObject.GetComponent<CapsuleCollider>().enabled = false;
-                gameObject.GetComponent<XRGrabInteractable>().enabled = false;
                 
                 
+                
+
 
             }
             
