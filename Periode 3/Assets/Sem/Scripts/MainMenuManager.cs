@@ -14,7 +14,7 @@ using UnityEditor;
 public class MainMenuManager : MonoBehaviour
 {
     public GameObject optionsCanvas, creditsCanvas, mainCanvas;
-    public Animator mainAnim, optionsAnim;
+    public Animator mainAnim, optionsAnim,creditsAnim;
     public Animator gearAnim;
     public Animator crossFade;
     public int menuState, gearState;
@@ -22,6 +22,7 @@ public class MainMenuManager : MonoBehaviour
     public GameObject[] gears;
     private bool animDone;
     public bool exitedOptions;
+    public bool exitedCredits;
 
     public void Start()
     {
@@ -56,7 +57,7 @@ public class MainMenuManager : MonoBehaviour
 
     public IEnumerator MainMenuActive()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         optionsCanvas.SetActive(true);
     }
 
@@ -91,7 +92,35 @@ public class MainMenuManager : MonoBehaviour
     }
     public void Credits()
     {
-        menuState = 1;
+        exitedOptions = false;
+        menuState = 2;
+        gearState = 1;
+        animDone = false;
+        StartCoroutine(nameof(MainMenuInactive));
+        StartCoroutine(nameof(CreditsActive));
+    }
+    public IEnumerator CreditsActive()
+    {
+        yield return new WaitForSeconds(1);
+        creditsCanvas.SetActive(true);
+    }
+    public void CreditsBack()
+    {
+        menuState = 0;
+
+        StartCoroutine(nameof(CreditsInactive));
+        
+        StartCoroutine(nameof(ResetGearSpeed));
+    }
+    public IEnumerator CreditsInactive()
+    {
+        
+        yield return new WaitForSeconds(1);
+        
+        creditsCanvas.SetActive(false);
+        mainCanvas.SetActive(true);
+
+
     }
     #endregion
 
@@ -106,11 +135,16 @@ public class MainMenuManager : MonoBehaviour
     {
         Application.Quit();
     }
+    public void StartCleanScene()
+    {
+        SceneManager.LoadScene(2);
+    }
     public void Update()
     {
         gearAnim.SetInteger("MenuState", menuState);
         mainAnim.SetInteger("MenuState", menuState);
         optionsAnim.SetInteger("MenuState", menuState);
+        creditsAnim.SetInteger("MenuState", menuState);
         if (menuState == 0 && animDone == true)
         {
             foreach (GameObject gear in gears)

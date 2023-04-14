@@ -135,7 +135,8 @@ public class SnapToHolder : MonoBehaviour
                 gameObject.transform.rotation = desiredRot;
                 Vector3 snapPos = new Vector3(collision.gameObject.transform.position.x, collision.gameObject.transform.position.y, collision.gameObject.transform.position.z);
                 Vector3 offset = new Vector3(0, yOffset, 0);
-                
+                aud.audioSources[2].gameObject.transform.position = gameObject.transform.position;
+                aud.PlayAudio(2, 1, 1);
                 gameObject.transform.position = snapPos+offset;
                 
                 snapped = true;
@@ -155,7 +156,8 @@ public class SnapToHolder : MonoBehaviour
             machine.objectToMove = null;
             GameObject child = gameObject.transform.GetChild(0).gameObject;
             Vector3 newPos = new Vector3(gameObject.transform.GetChild(0).transform.position.x, 5.5005f, gameObject.transform.GetChild(0).transform.position.z);
-            
+            aud.audioSources[2].gameObject.transform.position = gameObject.transform.position;
+            aud.PlayAudio(2, 1, 1);
             gameObject.transform.GetChild(0).transform.parent = null;
             child.transform.position = newPos;
             Destroy(gameObject);

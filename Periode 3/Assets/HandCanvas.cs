@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class HandCanvas : MonoBehaviour
@@ -58,7 +59,8 @@ public class HandCanvas : MonoBehaviour
         }
         if (leaveProgress >= maxProgress)
         {
-            Application.Quit();
+            //Application.Quit();
+            SceneManager.LoadScene(0);
             Debug.Log("Quit game");
         }
         slider.value = leaveProgress;
