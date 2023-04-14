@@ -25,6 +25,7 @@ TagManager:
   - Holder
   - Paint
   - Grabbed
+  - Kast
   layers:
   - Default
   - TransparentFX
@@ -40,7 +41,7 @@ TagManager:
   - Ignore
   - OtherPlayer
   - Holder
-  - 
+  - Drawer
   - 
   - 
   - 

@@ -80,6 +80,15 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OpenCanvas"",
+                    ""type"": ""Button"",
+                    ""id"": ""52c2591c-9726-48aa-8d5a-2fd5bd988fde"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -129,23 +138,34 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""4533592a-6695-49e6-8b2f-73272175fe16"",
-                    ""path"": ""<OculusTouchController>{LeftHand}/gripPressed"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Oculus"",
-                    ""action"": ""ReleaseLeft"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""4440e2c4-b2d3-47c7-8fd4-41d715453243"",
                     ""path"": ""<OculusTouchController>{RightHand}/gripPressed"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Oculus"",
                     ""action"": ""ReleaseRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""78c8bd68-e003-4230-877f-2cb46d8e270a"",
+                    ""path"": ""<OculusTouchController>{LeftHand}/primaryButton"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenCanvas"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4533592a-6695-49e6-8b2f-73272175fe16"",
+                    ""path"": ""<OculusTouchController>{LeftHand}/gripPressed"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Oculus"",
+                    ""action"": ""ReleaseLeft"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -184,6 +204,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         m_Player_GrabRight = m_Player.FindAction("GrabRight", throwIfNotFound: true);
         m_Player_ReleaseLeft = m_Player.FindAction("ReleaseLeft", throwIfNotFound: true);
         m_Player_ReleaseRight = m_Player.FindAction("ReleaseRight", throwIfNotFound: true);
+        m_Player_OpenCanvas = m_Player.FindAction("OpenCanvas", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -249,6 +270,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_GrabRight;
     private readonly InputAction m_Player_ReleaseLeft;
     private readonly InputAction m_Player_ReleaseRight;
+    private readonly InputAction m_Player_OpenCanvas;
     public struct PlayerActions
     {
         private @InputMaster m_Wrapper;
@@ -259,6 +281,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         public InputAction @GrabRight => m_Wrapper.m_Player_GrabRight;
         public InputAction @ReleaseLeft => m_Wrapper.m_Player_ReleaseLeft;
         public InputAction @ReleaseRight => m_Wrapper.m_Player_ReleaseRight;
+        public InputAction @OpenCanvas => m_Wrapper.m_Player_OpenCanvas;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -286,6 +309,9 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                 @ReleaseRight.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReleaseRight;
                 @ReleaseRight.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReleaseRight;
                 @ReleaseRight.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReleaseRight;
+                @OpenCanvas.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenCanvas;
+                @OpenCanvas.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenCanvas;
+                @OpenCanvas.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenCanvas;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -308,6 +334,9 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                 @ReleaseRight.started += instance.OnReleaseRight;
                 @ReleaseRight.performed += instance.OnReleaseRight;
                 @ReleaseRight.canceled += instance.OnReleaseRight;
+                @OpenCanvas.started += instance.OnOpenCanvas;
+                @OpenCanvas.performed += instance.OnOpenCanvas;
+                @OpenCanvas.canceled += instance.OnOpenCanvas;
             }
         }
     }
@@ -329,5 +358,6 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         void OnGrabRight(InputAction.CallbackContext context);
         void OnReleaseLeft(InputAction.CallbackContext context);
         void OnReleaseRight(InputAction.CallbackContext context);
+        void OnOpenCanvas(InputAction.CallbackContext context);
     }
 }

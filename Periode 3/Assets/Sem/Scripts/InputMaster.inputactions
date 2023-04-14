@@ -58,6 +58,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "OpenCanvas",
+                    "type": "Button",
+                    "id": "52c2591c-9726-48aa-8d5a-2fd5bd988fde",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -107,23 +116,34 @@
                 },
                 {
                     "name": "",
-                    "id": "4533592a-6695-49e6-8b2f-73272175fe16",
-                    "path": "<OculusTouchController>{LeftHand}/gripPressed",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Oculus",
-                    "action": "ReleaseLeft",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "4440e2c4-b2d3-47c7-8fd4-41d715453243",
                     "path": "<OculusTouchController>{RightHand}/gripPressed",
                     "interactions": "",
                     "processors": "",
                     "groups": "Oculus",
                     "action": "ReleaseRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "78c8bd68-e003-4230-877f-2cb46d8e270a",
+                    "path": "<OculusTouchController>{LeftHand}/primaryButton",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenCanvas",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4533592a-6695-49e6-8b2f-73272175fe16",
+                    "path": "<OculusTouchController>{LeftHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Oculus",
+                    "action": "ReleaseLeft",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

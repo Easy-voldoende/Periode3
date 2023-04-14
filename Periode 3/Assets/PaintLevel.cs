@@ -10,7 +10,11 @@ public class PaintLevel : MonoBehaviour
     public float dif;
     public bool occupied;
     public string assignedColor;
-    
+
+    public void Start()
+    {
+        refills = 1;
+    }
     void Update()
     {
         if(canisterOnHolder != null)
